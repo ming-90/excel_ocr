@@ -1,0 +1,10 @@
+data
+runs
+__pycache__
+.DS_Store
+results
+sample
+test_sample
+test_video.mp4
+*.png
+*.jpg
