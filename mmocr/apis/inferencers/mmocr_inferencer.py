@@ -59,7 +59,6 @@ class MMOCRInferencer(BaseMMOCRInferencer):
                  kie_weights: Optional[str] = None,
                  device: Optional[str] = None) -> None:
 
-        print("test")
         if det is None and rec is None and kie is None:
             raise ValueError('At least one of det, rec and kie should be '
                              'provided.')
