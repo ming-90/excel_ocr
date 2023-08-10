@@ -1,6 +1,8 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 from argparse import ArgumentParser
 import os
+import numpy
+import cv2
 
 from mmocr.apis.inferencers import MMOCRInferencer
 
@@ -94,7 +96,26 @@ def parse_args():
 def main():
     init_args, call_args = parse_args()
     ocr = MMOCRInferencer(**init_args)
-    ocr(**call_args)
+    result = ocr(**call_args)
+
+    image = cv2.imread("test_image.jpg")
+    result = result['predictions'][0]
+    # print(f"rec_text: {aa['rec_texts']}, lenght: {len(aa['rec_texts'])}")
+    # print(f"rec_score: {aa['rec_scores']}, lenght: {len(aa['rec_scores'])}")
+    # print(f"det_polygons: {aa['det_polygons']}, lenght: {len(aa['det_polygons'])}")
+    text = result['rec_texts']
+    coor = result['det_polygons']
+    rects = []
+    for idx,value in enumerate(coor):
+        x = [x_coor for i, x_coor in enumerate(value) if i % 2 == 0 ]
+        y = [x_coor for i, x_coor in enumerate(value) if i % 2 == 1 ]
+        rect = [int(min(x)), int(min(y)), int(max(x) - min(x)), int(max(y) - min(y))]
+
+        image = cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (255,0,0), 3)
+        # rects.append(rect)
+        # print(f"{text[idx]}, {rect}")
+        # print(value)
+    cv2.imwrite("test.jpg", image)
 
 
 if __name__ == '__main__':
