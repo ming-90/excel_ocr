@@ -368,13 +368,12 @@ class MMOCRInferencer(BaseMMOCRInferencer):
         pred_results = [{} for _ in range(len(next(iter(preds.values()))))]
         if 'rec' in self.mode:
             for i, rec_pred in enumerate(preds['rec']):
-                result = dict(rec_texts=[], rec_scores=[], test=[])
+                result = dict(rec_texts=[], rec_scores=[])
                 for rec_pred_instance in rec_pred:
                     rec_dict_res = self.textrec_inferencer.pred2dict(
                         rec_pred_instance)
-                    if rec_dict_res['scores'] > 0.8:
-                        result['rec_texts'].append(rec_dict_res['text'])
-                        result['rec_scores'].append(rec_dict_res['scores'])
+                    result['rec_texts'].append(rec_dict_res['text'])
+                    result['rec_scores'].append(rec_dict_res['scores'])
                 pred_results[i].update(result)
         if 'det' in self.mode:
             for i, det_pred in enumerate(preds['det']):
