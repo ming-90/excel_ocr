@@ -1,5 +1,6 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 from argparse import ArgumentParser
+import os
 
 from mmocr.apis.inferencers import MMOCRInferencer
 
