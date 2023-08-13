@@ -17,4 +17,4 @@ server:
 	PYTHONPATH=server uvicorn src.main:app --host 192.168.0.2 --port 50000 --reload --debug
 
 test:
-	python3 -m table_ocr.demo simple2.png
+	python3 -m table_ocr.demo simple3.png
