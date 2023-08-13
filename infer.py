@@ -1,7 +1,5 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 from argparse import ArgumentParser
-import os
-import numpy
 import cv2
 
 from mmocr.apis.inferencers import MMOCRInferencer
@@ -105,16 +103,29 @@ def main():
     # print(f"det_polygons: {aa['det_polygons']}, lenght: {len(aa['det_polygons'])}")
     text = result['rec_texts']
     coor = result['det_polygons']
-    rects = []
-    for idx,value in enumerate(coor):
-        x = [x_coor for i, x_coor in enumerate(value) if i % 2 == 0 ]
-        y = [x_coor for i, x_coor in enumerate(value) if i % 2 == 1 ]
+    infos = []
+    for idx, value in enumerate(coor):
+        x = [x_coor for i, x_coor in enumerate(value) if i % 2 == 0]
+        y = [x_coor for i, x_coor in enumerate(value) if i % 2 == 1]
         rect = [int(min(x)), int(min(y)), int(max(x) - min(x)), int(max(y) - min(y))]
+        info = [text[idx], [
+            int(min(x)),
+            int(min(y)),
+            int(max(x) - min(x)),
+            int(max(y) - min(y))]
+        ]
+        infos.append(info)
 
-        image = cv2.rectangle(image, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (255,0,0), 3)
-        # rects.append(rect)
-        # print(f"{text[idx]}, {rect}")
-        # print(value)
+        image = cv2.rectangle(
+            image,
+            (rect[0], rect[1]),
+            (rect[0] + rect[2], rect[1] + rect[3]),
+            (255, 0, 0),
+            3
+        )
+        print(f"{text[idx]}, {rect}")
+
+    print(infos)
     cv2.imwrite("test.jpg", image)
 
 

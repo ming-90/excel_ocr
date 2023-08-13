@@ -50,28 +50,35 @@ class MMOCRInferencer(BaseMMOCRInferencer):
 
     """
 
-    def __init__(self,
-                 det: Optional[Union[ConfigType, str]] = None,
-                 det_weights: Optional[str] = None,
-                 rec: Optional[Union[ConfigType, str]] = None,
-                 rec_weights: Optional[str] = None,
-                 kie: Optional[Union[ConfigType, str]] = None,
-                 kie_weights: Optional[str] = None,
-                 device: Optional[str] = None) -> None:
+    def __init__(
+        self,
+        det: Optional[Union[ConfigType, str]] = None,
+        det_weights: Optional[str] = None,
+        rec: Optional[Union[ConfigType, str]] = None,
+        rec_weights: Optional[str] = None,
+        kie: Optional[Union[ConfigType, str]] = None,
+        kie_weights: Optional[str] = None,
+        device: Optional[str] = None
+    ) -> None:
 
         if det is None and rec is None and kie is None:
-            raise ValueError('At least one of det, rec and kie should be '
-                             'provided.')
+            raise ValueError(
+                'At least one of det, rec and kie should be '
+                'provided.'
+            )
 
         self.visualizer = None
 
         if det is not None:
             self.textdet_inferencer = TextDetInferencer(
                 det, det_weights, device)
+
             self.mode = 'det'
         if rec is not None:
+            print("rec is not none")
             self.textrec_inferencer = TextRecInferencer(
                 rec, rec_weights, device)
+            print(self.textrec_inferencer)
             if getattr(self, 'mode', None) == 'det':
                 self.mode = 'det_rec'
                 ts = str(datetime.timestamp(datetime.now()))
