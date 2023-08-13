@@ -15,3 +15,6 @@ setup:
 
 server:
 	PYTHONPATH=server uvicorn src.main:app --host 192.168.0.2 --port 50000 --reload --debug
+
+test:
+	python infer.py test_image.jpg --det DBNetpp  --rec MASTER
