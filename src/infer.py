@@ -7,7 +7,7 @@ from table_ocr.ocr_from_cell import ocr_from_cell
 
 def infer():
     print("[INFO] Start OCR process.")
-    image = cv2.imread("simple2.png", cv2.IMREAD_GRAYSCALE)
+    image = cv2.imread("simple5.png", cv2.IMREAD_GRAYSCALE)
     print("[INFO] Find table in single image.")
     tables = extract_tables(image)
 
