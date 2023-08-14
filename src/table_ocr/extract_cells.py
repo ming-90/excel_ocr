@@ -89,9 +89,14 @@ def extract_cells(image):
 
     rows.sort(key=avg_height_of_center)
     cell_images_rows = []
+    height = 0
     for row in rows:
         cell_images_row = []
+        height += 1
+        width = 0
         for x, y, w, h in row:
             cell_images_row.append(image[y:y+h, x:x+w])
+            width += 1
         cell_images_rows.append(cell_images_row)
-    return cell_images_rows
+    print(width, height)
+    return cell_images_rows, width, height

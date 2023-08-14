@@ -13,8 +13,9 @@ def infer():
 
     for idx, table in enumerate(tables):
         print(f"Processing tables {idx+1}")
-        rows = extract_cells(table)
+        rows, width, height = extract_cells(table)
 
+        print(width, height)
         for i, row in enumerate(rows):
             for j, cell in enumerate(row):
                 # cv2.imwrite(f"test/test_{i}_{j}.png", cell)
