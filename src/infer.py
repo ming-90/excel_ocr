@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import pandas as pd
 
 from table_ocr.extract_tables import extract_tables
 from table_ocr.extract_cells import extract_cells
@@ -10,19 +11,27 @@ def infer():
     image = cv2.imread("simple5.png", cv2.IMREAD_GRAYSCALE)
     print("[INFO] Find table in single image.")
     tables = extract_tables(image)
-
+    df = pd.DataFrame(index=range(0),columns=['test','a','b','c','d','e'])
+    print("dataframe shape: ",df.shape)
     for idx, table in enumerate(tables):
         print(f"Processing tables {idx+1}")
         rows, width, height = extract_cells(table)
 
-        print(width, height)
         for i, row in enumerate(rows):
+            column = []
             for j, cell in enumerate(row):
-                # cv2.imwrite(f"test/test_{i}_{j}.png", cell)
+                # OCR
                 txt = ocr_from_cell(cell)
-                print("text : ", txt)
+                # Make column
+                if txt == "": txt = "undefined"
+                column.append(txt)
 
-    return tables
+            if i == 0:
+                df = pd.DataFrame(index=range(0), columns=column)
+            else:
+                df.loc[i-1] = column
+        print(df)
+    return df
 
 
 if __name__ == "__main__":

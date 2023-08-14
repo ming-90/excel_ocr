@@ -58,4 +58,4 @@ def ocr_image(image, config):
 
 def ocr_from_cell(image):
     cropped = crop_to_text(image)
-    return ocr_image(cropped, None)
+    return ocr_image(cropped, None).rstrip()

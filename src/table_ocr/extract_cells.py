@@ -98,5 +98,4 @@ def extract_cells(image):
             cell_images_row.append(image[y:y+h, x:x+w])
             width += 1
         cell_images_rows.append(cell_images_row)
-    print(width, height)
     return cell_images_rows, width, height
