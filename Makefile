@@ -8,13 +8,10 @@ env:
 	conda create -n $(BASENAME) -y python=$(PYTHON) $(addprefix -c ,$(CONDA_CH))
 
 setup:
-	pip install -U openmim
-	mim install mmengine
-	mim install mmcv
-	mim install mmdet
+	pip install -r requirements.txt
 
 server:
 	PYTHONPATH=server uvicorn src.main:app --host 192.168.0.2 --port 50000 --reload --debug
 
-test:
-	python3 -m table_ocr.demo simple3.png
+ocr:
+	python src/infer.py
