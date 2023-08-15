@@ -8,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from src.util import convert_image
+from src.infer import image_ocr
 
 # create a fastapi app instance
 app = FastAPI()
@@ -47,5 +48,6 @@ async def infer(
     image: UploadFile = File(...)
 ) -> dataframe:
     image = await convert_image(image)
-    print(type(image))
-    return "tet"
+    df = image_ocr(image)
+    print(df)
+    return df
