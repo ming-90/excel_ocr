@@ -1,5 +1,6 @@
 from fastapi import UploadFile
 import numpy as np
+import cv2
 
 async def convert_image(file: UploadFile) -> np.ndarray:
     """Convert image to numpy array."""

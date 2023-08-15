@@ -1,16 +1,14 @@
 import os
+import cv2
 from typing import Any, List
-
 from fastapi import FastAPI, HTTPException, UploadFile, File, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-
-import cv2
-
 from pydantic import BaseModel
 
-import time
+from src.util import convert_image
+
 # create a fastapi app instance
 app = FastAPI()
 
@@ -24,8 +22,8 @@ SECOND_PER_FRAME = os.getenv("SECOND_PER_FRAME", 1)
 ###################
 # Models
 ###################
-class ImageReturn(BaseModel):
-    image: List[str]
+class dataframe(BaseModel):
+    data: List
 
 ###################
 # APIs
@@ -37,9 +35,17 @@ def healthcheck() -> bool:
 
 # templates = Jinja2Templates(directory="src/js")
 # app.mount("/frontend", StaticFiles(directory="src/js"), name="static")
-@app.get("/", response_model=None)
-async def read_users(request: Request) -> Request:
-    context = {}
-    context["request"] = request
+# @app.get("/", response_model=dataframe)
+# async def index(request: Request) -> Request:
+#     context = {}
+#     context["request"] = request
 
-    return templates.TemplateResponse("index.html", context)
+#     return templates.TemplateResponse("index.html", context)
+
+@app.post("/infer", response_model=None)
+async def infer(
+    image: UploadFile = File(...)
+) -> dataframe:
+    image = await convert_image(image)
+    print(type(image))
+    return "tet"
