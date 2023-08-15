@@ -4,5 +4,6 @@ pandas      == 2.0.3
 
 # Server
 fastapi==0.85.0
+python-multipart==0.0.6
 uvicorn==0.18.3
 Jinja2==3.1.2
