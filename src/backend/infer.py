@@ -2,9 +2,9 @@ import cv2
 import numpy as np
 import pandas as pd
 
-from src.table_ocr.extract_tables import extract_tables
-from src.table_ocr.extract_cells import extract_cells
-from src.table_ocr.ocr_from_cell import ocr_from_cell
+from src.backend.table_ocr.extract_tables import extract_tables
+from src.backend.table_ocr.extract_cells import extract_cells
+from src.backend.table_ocr.ocr_from_cell import ocr_from_cell
 
 def image_ocr(
     image: np.ndarray
