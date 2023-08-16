@@ -7,8 +7,8 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from src.util import convert_image
-from src.infer import image_ocr
+from src.backend.util import convert_image
+from src.backend.infer import image_ocr
 
 # create a fastapi app instance
 app = FastAPI()
