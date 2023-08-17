@@ -4,6 +4,7 @@ const change_image = async (e) => {
     file_type = e.target.files[0].type
 
     file = e.target.files[0]
+    console.log(file)
     show_image(file)
 
     let formData = new FormData()
@@ -17,6 +18,12 @@ const change_image = async (e) => {
     }).then((response) => response.json())
     .then((data) => {
         console.log(data)
+        $.each(data, function(idx, val) {
+            console.log(val)
+            s = new dfd.Series(val)
+            s.print()
+
+        })
     })
 }
 
@@ -35,7 +42,7 @@ const create_tag = (parent, type) => {
     tag = ""
     if(type == "image"){
         tag = `
-            <image id=file></image>
+            <image class=image id=file></image>
         `
     }else{
         tag = `

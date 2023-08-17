@@ -11,6 +11,7 @@ body{
 }
 .flex{ display: flex; }
 .upload{ width:300px; margin:0 auto; }
+.image{width:100%}
 
 .wrapper{
     margin-top:50px;
