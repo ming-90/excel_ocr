@@ -1,0 +1,29 @@
+*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+body{
+    display: flex;
+    align-items: center;
+    height: inherit;
+    justify-content: center;
+}
+
+.flex{
+    display: flex;
+}
+
+.wrapper{
+    margin-top:50px
+}
+
+.pdf-viewer{
+    display: flex;
+    background-color: black;
+}
+
+.result-viewer{
+    display: flex;
+    background-color: red;
+}
