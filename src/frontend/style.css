@@ -9,21 +9,24 @@ body{
     height: inherit;
     justify-content: center;
 }
-
-.flex{
-    display: flex;
-}
+.flex{ display: flex; }
+.upload{ width:300px; margin:0 auto; }
 
 .wrapper{
-    margin-top:50px
+    margin-top:50px;
+    width:800px
 }
 
 .pdf-viewer{
     display: flex;
     background-color: black;
+    width:50%;
+    height:200px;
 }
 
 .result-viewer{
     display: flex;
     background-color: red;
+    width:50%;
+    height:200px;
 }
