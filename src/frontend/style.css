@@ -20,19 +20,17 @@ body{
 
 .viewer-wrapper{
     border:1px solid black;
-    height:600px;
+    min-height:200px;
     border-radius: 10px;
 }
 .pdf-viewer{
     display: flex;
-    background-color: black;
     margin:10px;
     width:50%;
 }
 
 .result-viewer{
     display: flex;
-    background-color: red;
     margin:10px;
     width:50%;
 }
