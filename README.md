@@ -8,6 +8,8 @@ The output data is converted to a dataframe in pandas on the backend and to a da
 
 ## Demo Video
 
+https://github.com/ming-90/excel_ocr/assets/48505409/82177cff-d565-4739-b9f7-b867e704113a
+
 
 ## How to use
 ```bash
