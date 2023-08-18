@@ -1,0 +1,36 @@
+*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+body{
+    display: flex;
+    align-items: center;
+    height: inherit;
+    justify-content: center;
+}
+.flex{ display: flex; }
+.upload{ width:300px; margin:0 auto; }
+.image{width:100%}
+
+.wrapper{
+    margin-top:50px;
+    width:1500px;
+}
+
+.viewer-wrapper{
+    border:1px solid black;
+    min-height:200px;
+    border-radius: 10px;
+}
+.pdf-viewer{
+    display: flex;
+    margin:10px;
+    width:50%;
+}
+
+.result-viewer{
+    display: flex;
+    margin:10px;
+    width:50%;
+}

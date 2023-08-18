@@ -34,14 +34,14 @@ def healthcheck() -> bool:
     """Ping and pong for healthcheck."""
     return True
 
-# templates = Jinja2Templates(directory="src/js")
-# app.mount("/frontend", StaticFiles(directory="src/js"), name="static")
-# @app.get("/", response_model=dataframe)
-# async def index(request: Request) -> Request:
-#     context = {}
-#     context["request"] = request
+templates = Jinja2Templates(directory="src/frontend")
+app.mount("/frontend", StaticFiles(directory="src/frontend"), name="static")
+@app.get("/", response_model=dataframe)
+async def index(request: Request) -> Request:
+    context = {}
+    context["request"] = request
 
-#     return templates.TemplateResponse("index.html", context)
+    return templates.TemplateResponse("index.html", context)
 
 @app.post("/infer", response_model=None)
 async def infer(
@@ -49,5 +49,4 @@ async def infer(
 ) -> dataframe:
     image = await convert_image(image)
     df = image_ocr(image)
-    print(df)
     return df
