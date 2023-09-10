@@ -10,6 +10,13 @@ env:
 setup:
 	pip install -r requirements.txt
 
+format:
+	black .
+	isort .
+
+lint:
+	pytest src --flake8 --pylint --mypy
+
 server:
 	PYTHONPATH=server uvicorn src.backend.main:app --host 192.168.0.2 --port 50000 --reload --debug
 

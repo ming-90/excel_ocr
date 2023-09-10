@@ -1,14 +1,15 @@
 import os
-import cv2
 from typing import Any, List
-from fastapi import FastAPI, HTTPException, UploadFile, File, Request
-from fastapi.templating import Jinja2Templates
+
+import cv2
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 
-from src.backend.util import convert_image
 from src.backend.infer import image_ocr
+from src.backend.util import convert_image
 
 # create a fastapi app instance
 app = FastAPI()
@@ -26,6 +27,7 @@ SECOND_PER_FRAME = os.getenv("SECOND_PER_FRAME", 1)
 class dataframe(BaseModel):
     data: List
 
+
 ###################
 # APIs
 ###################
@@ -34,8 +36,11 @@ def healthcheck() -> bool:
     """Ping and pong for healthcheck."""
     return True
 
+
 templates = Jinja2Templates(directory="src/frontend")
 app.mount("/frontend", StaticFiles(directory="src/frontend"), name="static")
+
+
 @app.get("/", response_model=dataframe)
 async def index(request: Request) -> Request:
     context = {}
@@ -43,10 +48,9 @@ async def index(request: Request) -> Request:
 
     return templates.TemplateResponse("index.html", context)
 
+
 @app.post("/infer", response_model=None)
-async def infer(
-    image: UploadFile = File(...)
-) -> dataframe:
+async def infer(image: UploadFile = File(...)) -> dataframe:
     image = await convert_image(image)
     df = image_ocr(image)
     return df

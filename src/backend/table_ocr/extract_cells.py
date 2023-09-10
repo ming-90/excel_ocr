@@ -1,10 +1,13 @@
 import cv2
 
+
 def extract_cells(image):
     BLUR_KERNEL_SIZE = (17, 17)
     STD_DEV_X_DIRECTION = 0
     STD_DEV_Y_DIRECTION = 0
-    blurred = cv2.GaussianBlur(image, BLUR_KERNEL_SIZE, STD_DEV_X_DIRECTION, STD_DEV_Y_DIRECTION)
+    blurred = cv2.GaussianBlur(
+        image, BLUR_KERNEL_SIZE, STD_DEV_X_DIRECTION, STD_DEV_Y_DIRECTION
+    )
     MAX_COLOR_VAL = 255
     BLOCK_SIZE = 15
     SUBTRACT_FROM_MEAN = -2
@@ -20,17 +23,27 @@ def extract_cells(image):
     vertical = horizontal = img_bin.copy()
     SCALE = 5
     image_width, image_height = horizontal.shape
-    horizontal_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (int(image_width / SCALE), 1))
+    horizontal_kernel = cv2.getStructuringElement(
+        cv2.MORPH_RECT, (int(image_width / SCALE), 1)
+    )
     horizontally_opened = cv2.morphologyEx(img_bin, cv2.MORPH_OPEN, horizontal_kernel)
-    vertical_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (1, int(image_height / SCALE)))
+    vertical_kernel = cv2.getStructuringElement(
+        cv2.MORPH_RECT, (1, int(image_height / SCALE))
+    )
     vertically_opened = cv2.morphologyEx(img_bin, cv2.MORPH_OPEN, vertical_kernel)
 
-    horizontally_dilated = cv2.dilate(horizontally_opened, cv2.getStructuringElement(cv2.MORPH_RECT, (40, 1)))
-    vertically_dilated = cv2.dilate(vertically_opened, cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60)))
+    horizontally_dilated = cv2.dilate(
+        horizontally_opened, cv2.getStructuringElement(cv2.MORPH_RECT, (40, 1))
+    )
+    vertically_dilated = cv2.dilate(
+        vertically_opened, cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
+    )
 
     mask = horizontally_dilated + vertically_dilated
     contours, heirarchy = cv2.findContours(
-        mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE,
+        mask,
+        cv2.RETR_TREE,
+        cv2.CHAIN_APPROX_SIMPLE,
     )
 
     perimeter_lengths = [cv2.arcLength(c, True) for c in contours]
@@ -56,6 +69,7 @@ def extract_cells(image):
     bounding_rects = [b for b in bounding_rects if b is not largest_rect]
 
     cells = [c for c in bounding_rects]
+
     def cell_in_same_row(c1, c2):
         c1_center = c1[1] + c1[3] - c1[3] / 2
         c2_bottom = c2[1] + c2[3]
@@ -68,19 +82,12 @@ def extract_cells(image):
         first = cells[0]
         rest = cells[1:]
         cells_in_same_row = sorted(
-            [
-                c for c in rest
-                if cell_in_same_row(c, first)
-            ],
-            key=lambda c: c[0]
+            [c for c in rest if cell_in_same_row(c, first)], key=lambda c: c[0]
         )
 
         row_cells = sorted([first] + cells_in_same_row, key=lambda c: c[0])
         rows.append(row_cells)
-        cells = [
-            c for c in rest
-            if not cell_in_same_row(c, first)
-        ]
+        cells = [c for c in rest if not cell_in_same_row(c, first)]
 
     # Sort rows by average height of their center.
     def avg_height_of_center(row):
@@ -95,7 +102,7 @@ def extract_cells(image):
         height += 1
         width = 0
         for x, y, w, h in row:
-            cell_images_row.append(image[y:y+h, x:x+w])
+            cell_images_row.append(image[y : y + h, x : x + w])
             width += 1
         cell_images_rows.append(cell_images_row)
     return cell_images_rows, width, height
