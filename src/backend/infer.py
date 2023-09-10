@@ -33,3 +33,4 @@ def image_ocr(image: np.ndarray):
                 df.loc[i - 1] = column
         ocr_result.append(df)
     return ocr_result
+
